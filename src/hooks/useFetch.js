@@ -13,24 +13,22 @@ export default function useFetch(url){
         setError(null)
 
         async function fetchData() {
-            const response = await fetch(${url})
+            const response = await fetch(url)
                 if(!response.ok) {
-                    setData(false);
+                    setError(response.status);
                     setLoading(false);
                 }
 
             const json = await response.json()
              console.log(json)
+                setData(json)
                 setLoading(false)
-                setError(false)
         }
         fetchData()
     }, [url]);
 
 
-    return(
-        <div>
-            
-        </div>
-    )
+    return{data, loading, error}
+
+
 }
