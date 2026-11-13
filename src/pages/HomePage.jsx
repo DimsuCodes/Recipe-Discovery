@@ -1,5 +1,7 @@
 import useFetch from '../hooks/useFetch'
 import {Link} from 'react-router-dom'
+import Spinner from '../components/Spinner'
+import ErrorMessage from '../components/ErrorMessage'
 
 
 
@@ -12,8 +14,8 @@ export default function HomePage() {
   return(
     <div>
       <h1>Hello Recipes Pages!</h1>
-      {loading && <p> Page is loading...</p>}
-      {error && <p>{error}</p>}
+      {loading && <Spinner />}
+      {error && <ErrorMessage message={error} />}
       {data && data.categories.map((category) => (
         <p key={category.idCategory}><Link to={`/category/${category.strCategory}`}>{category.strCategory}</Link></p>
       ))}

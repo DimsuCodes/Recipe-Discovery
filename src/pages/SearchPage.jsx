@@ -1,5 +1,8 @@
-import { useSearchParams, Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import useFetch from '../hooks/useFetch'
+import RecipeCard from '../components/RecipeCard'
+import Spinner from '../components/Spinner'
+import ErrorMessage from '../components/ErrorMessage'
 
 export default function SearchPage() {
   const [searchParams] = useSearchParams()       // reads the part after ? in the URL
@@ -10,14 +13,14 @@ export default function SearchPage() {
   return (
     <div>
       <h2>Results for "{query}"</h2>
-      {loading && <p>Page is loading...</p>}
-      {error && <p>{error}</p>}
+      {loading && <Spinner />}
+      {error && <ErrorMessage message={error} />}
       {data && !data.meals && <p>No recipes found.</p>}
-      {data && data.meals && data.meals.map((meal) => (
-        <p key={meal.idMeal}>
-          <Link to={`/recipe/${meal.idMeal}`}>{meal.strMeal}</Link>
-        </p>
-      ))}
+      <div className="card-grid">
+        {data && data.meals && data.meals.map((meal) => (
+          <RecipeCard key={meal.idMeal} id={meal.idMeal} name={meal.strMeal} image={meal.strMealThumb} />
+        ))}
+      </div>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import  useFetch from '../hooks/useFetch';
-import { Link } from 'react-router-dom';
+import RecipeCard from '../components/RecipeCard';
+import Spinner from '../components/Spinner';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function CategoryPage() {
 
@@ -12,11 +14,13 @@ export default function CategoryPage() {
   return (
     <div>
       <h2>Categories: {categoryName}</h2>
-      {loading && <p> Page is loading...</p>}
-      {error && <p>{error}</p>}
-      {data && data.meals.map((meals) =>(
-        <p key={meals.idMeal}><Link to={`/recipe/${meals.idMeal}`}><img src={meals.strMealThumb} alt={meals.strMeal} /> {meals.strMeal}</Link></p>
-      ))}
+      {loading && <Spinner />}
+      {error && <ErrorMessage message={error} />}
+      <div className="card-grid">
+        {data && data.meals.map((meals) =>(
+          <RecipeCard key={meals.idMeal} id={meals.idMeal} name={meals.strMeal} image={meals.strMealThumb} />
+        ))}
+      </div>
     </div>
 
   )

@@ -17,7 +17,7 @@ export default function Navbar() {
       <form onSubmit={handleSubmit}>
         <input
           value={query}
-          onChange={(e) => query(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           placeholder="Search recipes..."
         />
         <button type="submit">Search</button>

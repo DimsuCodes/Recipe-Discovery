@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import useFetch from '../hooks/useFetch'
 import { useContext } from 'react'
 import { FavoritesContext } from '../context/favoritesContext'
+import Spinner from '../components/Spinner'
+import ErrorMessage from '../components/ErrorMessage'
 
 
 export default function RecipeDetailPage() {
@@ -79,9 +81,9 @@ export default function RecipeDetailPage() {
       }
 
       {/* While waiting for the API, show a loading message. */}
-      {loading && <p> Page is loading...</p>}
+      {loading && <Spinner />}
       {/* If the API failed, show the error code. */}
-      {error && <p>{error}</p>}
+      {error && <ErrorMessage message={error} />}
     </div>
 
   )
