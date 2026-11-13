@@ -2,7 +2,8 @@
 import { useParams } from 'react-router-dom'
 // Our own helper that grabs data from a link and remembers it.
 import useFetch from '../hooks/useFetch'
-
+import { useContext } from 'react'
+import { FavoritesContext } from '../context/favoritesContext'
 
 
 export default function RecipeDetailPage() {
@@ -14,9 +15,13 @@ export default function RecipeDetailPage() {
   // so every recipe page fetches its own recipe.
   const { data, loading, error } = useFetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
 
+  // Grab the favorites tools from the shared box.
+  const { addFavorite, removeFavorite, isFavorite } = useContext(FavoritesContext)
+
   // The API puts our recipe in a list called meals, and it's the only one,
   // so it's in spot 0. "data &&" stops a crash while data is still null.
   const meals = data && data.meals[0]
+
 
   // const ingredients = meals["strIngredient" + i];
   //   for (let meals = 0; meals < ingredients.length; meals++) {
@@ -51,6 +56,10 @@ export default function RecipeDetailPage() {
         <div>
           {/* The recipe's name */}
           <h3>{meals.strMeal}</h3>
+          {/* If it's saved, clicking removes it. If not, clicking adds it. */}
+          <button onClick={() => isFavorite(recipeId) ? removeFavorite(recipeId) : addFavorite(recipeId)}>
+            {isFavorite(recipeId) ? "Remove from Favorites" : "Add to Favorites"}
+          </button>
           {/* The recipe's picture. alt describes it for screen readers. */}
           <img src={meals.strMealThumb} alt={meals.strMeal} />
           {/* The cooking steps */}
@@ -58,7 +67,7 @@ export default function RecipeDetailPage() {
             {meals.strInstructions}
           </p>
           <ul>
-            {ingredients.map((item) =>(
+            {ingredients.map((item) => (
               <li key={item} >
                 {item}
               </li>
