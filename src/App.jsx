@@ -5,10 +5,11 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RecipeDetailPage from "./pages/RecipeDetailPage";
 import SearchPage from "./pages/SearchPage";
-
+import NavBar from "./components/Navbar"
 export default function App() {
     return (
         <div>
+            <NavBar />
             <Routes>
                 <Route path="/"element={<HomePage />}/>
                 <Route path="/category/:categoryName"element={<CategoryPage />}/>
