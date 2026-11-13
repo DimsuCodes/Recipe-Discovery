@@ -57,6 +57,14 @@ export default function RecipeDetailPage() {
           <p>
             {meals.strInstructions}
           </p>
+          <ul>
+            {ingredients.map((item) =>(
+              <li key={item} >
+                {item}
+              </li>
+            ))}
+
+          </ul>
         </div>
 
       }
